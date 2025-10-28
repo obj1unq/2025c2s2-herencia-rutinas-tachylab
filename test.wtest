@@ -1,0 +1,26 @@
+import rutinas.*
+
+describe "Test de las Rutinas" {
+
+    test "Running" {
+        running.intensidad(1.2)
+        assert.equals(360, running.caloriasQuemadasEn(5))
+        assert.equals(10200, running.caloriasQuemadasEn(90))
+    }
+
+    test "Maraton" {
+        maraton.intensidad(1.5)
+        assert.equals(900, maraton.caloriasQuemadasEn(5))
+        assert.equals(25500, maraton.caloriasQuemadasEn(90))
+    }
+
+    test "Remo" {
+        assert.equals(520, remo.caloriasQuemadasEn(5))
+        assert.equals(9360, remo.caloriasQuemadasEn(90))
+    }
+
+    test "Remo de Competicion" {
+        assert.equals(510, remoCompeticion.caloriasQuemadasEn(5))
+        assert.equals(12750, remoCompeticion.caloriasQuemadasEn(90))
+    }
+}
