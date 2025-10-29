@@ -62,3 +62,21 @@ describe "Test de las Personas Sedentarias" {
         assert.equals(40, calamardo.peso())
     }
 }
+
+describe "Test de las Personas Atleticas" {
+    test "Test de las Personas Atleticas - Running" {
+        running.intensidad(1.2)
+    }
+
+    test "Test de las Personas Atleticas - Maraton" {
+        
+    }
+
+    test "Test de las Personas Atleticas - Remo" {
+        
+    }
+
+    test "Test de las Personas Atleticas - Remo de competencia" {
+        
+    }
+}

@@ -21,12 +21,12 @@ class Persona {
     }
 
     method practicarRutina(rutina) {
-        if (self.seAplicaLaRutina()) {
+        if (self.seAplicaLaRutina(rutina)) {
             peso = (peso - self.pesoPerdidoEn(rutina)).truncate(3)
         }
     }
 
-    method seAplicaLaRutina() {
+    method seAplicaLaRutina(rutina) {
         return
     }
 }
@@ -43,11 +43,28 @@ class PersonaSedentaria inherits Persona {
         return caloriasPorKiloQuemado
     }
 
-    override method seAplicaLaRutina() {
+    override method seAplicaLaRutina(rutina) {
         return peso > 50
     }
 }
 
-class PersonaAtletica {
+class PersonaAtletica inherits Persona {
+    const tiempoEjercitado = 90
+    const caloriasPorKiloQuemado = 8000
 
+    override method tiempoEjercitado() {
+        return tiempoEjercitado
+    }
+
+    override method caloriasPorKiloQuemado() {
+        return caloriasPorKiloQuemado
+    }
+
+    override method pesoPerdidoEn(rutina) {
+        return super(rutina) - 1
+    }
+
+    override method seAplicaLaRutina(rutina) {
+        return rutina.caloriasQuemadasEn(self.tiempoEjercitado()) > 10000
+    }
 }
