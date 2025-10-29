@@ -49,11 +49,10 @@ class PersonaSedentaria inherits Persona {
 }
 
 class PersonaAtletica inherits Persona {
-    const tiempoEjercitado = 90
     const caloriasPorKiloQuemado = 8000
 
     override method tiempoEjercitado() {
-        return tiempoEjercitado
+        return 90
     }
 
     override method caloriasPorKiloQuemado() {

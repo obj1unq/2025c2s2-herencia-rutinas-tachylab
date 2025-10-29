@@ -2,81 +2,112 @@ import rutinas.*
 import personas.*
 
 describe "Test de las Rutinas" {
+    var runningPrueba
+    var maratonPrueba
+    var remoPrueba
+    var remoCompeticionPrueba
 
+    method initialize() {
+        runningPrueba = new Running(intensidad = 1.2)
+        maratonPrueba = new Maraton(intensidad = 1.5)
+        remoPrueba = new Remo()
+        remoCompeticionPrueba = new RemoCompeticion()
+    }
     test "Running" {
-        running.intensidad(1.2)
-        assert.equals(360, running.caloriasQuemadasEn(5))
-        assert.equals(10200, running.caloriasQuemadasEn(90))
+        runningPrueba.intensidad(1.2)
+        assert.equals(360, runningPrueba.caloriasQuemadasEn(5))
+        assert.equals(10200, runningPrueba.caloriasQuemadasEn(90))
     }
 
     test "Maraton" {
-        maraton.intensidad(1.5)
-        assert.equals(900, maraton.caloriasQuemadasEn(5))
-        assert.equals(25500, maraton.caloriasQuemadasEn(90))
+        maratonPrueba.intensidad(1.5)
+        assert.equals(900, maratonPrueba.caloriasQuemadasEn(5))
+        assert.equals(25500, maratonPrueba.caloriasQuemadasEn(90))
     }
 
     test "Remo" {
-        assert.equals(520, remo.caloriasQuemadasEn(5))
-        assert.equals(9360, remo.caloriasQuemadasEn(90))
+        assert.equals(520, remoPrueba.caloriasQuemadasEn(5))
+        assert.equals(9360, remoPrueba.caloriasQuemadasEn(90))
     }
 
     test "Remo de Competicion" {
-        assert.equals(510, remoCompeticion.caloriasQuemadasEn(5))
-        assert.equals(12750, remoCompeticion.caloriasQuemadasEn(90))
+        assert.equals(510, remoCompeticionPrueba.caloriasQuemadasEn(5))
+        assert.equals(12750, remoCompeticionPrueba.caloriasQuemadasEn(90))
     }
 }
 
 describe "Test de las Personas Sedentarias" {
     var calamardo
+    var runningPrueba
+    var maratonPrueba
+    var remoPrueba
+    var remoCompeticionPrueba
 
-    test "Test de las Personas Sedentarias - Running" {
-        running.intensidad(1.2)
+    method initialize() {
         calamardo = new PersonaSedentaria(peso = 60, tiempoEjercitado = 5)
-        calamardo.practicarRutina(running)
+        runningPrueba = new Running(intensidad = 1.2)
+        maratonPrueba = new Maraton(intensidad = 1.5)
+        remoPrueba = new Remo()
+        remoCompeticionPrueba = new RemoCompeticion()
+    }
+    test "Test de las Personas Sedentarias - Running" {
+        calamardo.practicarRutina(runningPrueba)
         assert.equals(59.948, calamardo.peso())
     }
 
     test "Test de las Personas Sedentarias - Maraton" {
-        maraton.intensidad(1.5)
-        calamardo = new PersonaSedentaria(peso = 60, tiempoEjercitado = 5)
-        calamardo.practicarRutina(maraton)
+        calamardo.practicarRutina(maratonPrueba)
         assert.equals(59.871, calamardo.peso())
     }
 
     test "Test de las Personas Sedentarias - Remo" {
-        calamardo = new PersonaSedentaria(peso = 60, tiempoEjercitado = 5)
-        calamardo.practicarRutina(remo)
+        calamardo.practicarRutina(remoPrueba)
         assert.equals(59.925, calamardo.peso())
     }
 
     test "Test de las Personas Sedentarias - Remo de Competicion" {
-        calamardo = new PersonaSedentaria(peso = 60, tiempoEjercitado = 5)
-        calamardo.practicarRutina(remoCompeticion)
+        calamardo.practicarRutina(remoCompeticionPrueba)
         assert.equals(59.927, calamardo.peso())
     }
 
     test "Test de las Personas Sedentarias - No hace ninguna rutina" {
-        running.intensidad(1.2)
         calamardo = new PersonaSedentaria(peso = 40, tiempoEjercitado = 5)
-        calamardo.practicarRutina(running)
+        calamardo.practicarRutina(runningPrueba)
         assert.equals(40, calamardo.peso())
     }
 }
 
 describe "Test de las Personas Atleticas" {
+    var bob
+    var runningPrueba
+    var maratonPrueba
+    var remoPrueba
+    var remoCompeticionPrueba
+
+    method initialize() {
+        bob = new PersonaAtletica(peso = 40)
+        runningPrueba = new Running(intensidad = 1.2)
+        maratonPrueba = new Maraton(intensidad = 1.5)
+        remoPrueba = new Remo()
+        remoCompeticionPrueba = new RemoCompeticion()
+    }
     test "Test de las Personas Atleticas - Running" {
-        running.intensidad(1.2)
+        bob.practicarRutina(runningPrueba)
+        assert.equals(39.725, bob.peso())
     }
 
     test "Test de las Personas Atleticas - Maraton" {
-        
+        bob.practicarRutina(maratonPrueba)
+        assert.equals(37.812, bob.peso())
     }
 
     test "Test de las Personas Atleticas - Remo" {
-        
+        bob.practicarRutina(remoPrueba)
+        assert.equals(40, bob.peso())
     }
 
     test "Test de las Personas Atleticas - Remo de competencia" {
-        
+        bob.practicarRutina(remoCompeticionPrueba)
+        assert.equals(39.406, bob.peso())
     }
 }
