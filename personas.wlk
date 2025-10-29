@@ -1,9 +1,6 @@
 class Persona {
     var peso = 0
 
-    method peso(_peso) {
-        peso = _peso
-    }
     method peso() {
         return peso
     }
@@ -14,6 +11,10 @@ class Persona {
 
     method caloriasPorKiloQuemado() {
         return 
+    }
+
+    method caloriasQuemadasPor(rutina) {
+        return rutina.caloriasQuemadasEn(self.tiempoEjercitado())
     }
 
     method pesoPerdidoEn(rutina) {

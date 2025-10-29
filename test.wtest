@@ -1,3 +1,4 @@
+import clubes.*
 import rutinas.*
 import personas.*
 
@@ -109,5 +110,48 @@ describe "Test de las Personas Atleticas" {
     test "Test de las Personas Atleticas - Remo de competencia" {
         bob.practicarRutina(remoCompeticionPrueba)
         assert.equals(39.406, bob.peso())
+    }
+}
+
+describe "Test de los Clubes y Predios" {
+    var clubBarrial
+    var nautico
+    var recreo
+    var remarDelta
+    var caminoRemeros
+    var correrPlaya
+    var correrMaraton
+    var bob
+    var calamardo
+
+
+    method initialize() {
+        clubBarrial = new Club()
+        nautico = new Predio()
+        recreo = new Predio()
+        remarDelta = new Remo()
+        caminoRemeros = new RemoCompeticion()
+        correrPlaya = new Running(intensidad = 1.2)
+        correrMaraton = new Maraton(intensidad = 1.5)
+        nautico.rutinasPracticables().addAll(#{remarDelta, caminoRemeros})
+        recreo.rutinasPracticables().addAll(#{correrPlaya, correrMaraton})
+        clubBarrial.prediosDisponibles().addAll(#{nautico, recreo})
+        bob = new PersonaAtletica(peso = 40)
+        calamardo = new PersonaSedentaria(peso = 60, tiempoEjercitado = 5)
+    }
+
+    test "Test de los Clubes y Predios - Mejor Predio" {
+        assert.equals(recreo, clubBarrial.mejorPredioPara(bob))
+        assert.equals(recreo, clubBarrial.mejorPredioPara(calamardo))
+    }
+
+    test "Test de los Clubes y Predios - Predios Tranquis" {
+        assert.equals(#{}, clubBarrial.prediosTranquisPara(bob))
+        assert.equals(#{recreo}, clubBarrial.prediosTranquisPara(calamardo))
+    }
+
+    test "Test de los Clubes y Predios - Rutinas Exigentes" {
+        assert.equals([caminoRemeros, correrMaraton], clubBarrial.rutinasMasExigentesPara(bob))
+        assert.equals([remarDelta, correrMaraton], clubBarrial.rutinasMasExigentesPara(calamardo))
     }
 }

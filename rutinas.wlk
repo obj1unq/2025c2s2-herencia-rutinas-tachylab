@@ -8,6 +8,10 @@ class Rutina {
     method caloriasQuemadasEn(tiempo) {
         return 100 * (tiempo - self.descanso(tiempo)) * self.intensidad()
     }
+
+    method esRutinaTranquiPara(persona) {
+        return self.caloriasQuemadasEn(persona.tiempoEjercitado()) < 500
+    }
 }
 
 class Running inherits Rutina {
