@@ -1,4 +1,5 @@
 import rutinas.*
+import personas.*
 
 describe "Test de las Rutinas" {
 
@@ -22,5 +23,42 @@ describe "Test de las Rutinas" {
     test "Remo de Competicion" {
         assert.equals(510, remoCompeticion.caloriasQuemadasEn(5))
         assert.equals(12750, remoCompeticion.caloriasQuemadasEn(90))
+    }
+}
+
+describe "Test de las Personas Sedentarias" {
+    var calamardo
+
+    test "Test de las Personas Sedentarias - Running" {
+        running.intensidad(1.2)
+        calamardo = new PersonaSedentaria(peso = 60, tiempoEjercitado = 5)
+        calamardo.practicarRutina(running)
+        assert.equals(59.948, calamardo.peso())
+    }
+
+    test "Test de las Personas Sedentarias - Maraton" {
+        maraton.intensidad(1.5)
+        calamardo = new PersonaSedentaria(peso = 60, tiempoEjercitado = 5)
+        calamardo.practicarRutina(maraton)
+        assert.equals(59.871, calamardo.peso())
+    }
+
+    test "Test de las Personas Sedentarias - Remo" {
+        calamardo = new PersonaSedentaria(peso = 60, tiempoEjercitado = 5)
+        calamardo.practicarRutina(remo)
+        assert.equals(59.925, calamardo.peso())
+    }
+
+    test "Test de las Personas Sedentarias - Remo de Competicion" {
+        calamardo = new PersonaSedentaria(peso = 60, tiempoEjercitado = 5)
+        calamardo.practicarRutina(remoCompeticion)
+        assert.equals(59.927, calamardo.peso())
+    }
+
+    test "Test de las Personas Sedentarias - No hace ninguna rutina" {
+        running.intensidad(1.2)
+        calamardo = new PersonaSedentaria(peso = 40, tiempoEjercitado = 5)
+        calamardo.practicarRutina(running)
+        assert.equals(40, calamardo.peso())
     }
 }
