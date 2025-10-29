@@ -1,0 +1,157 @@
+import clubes.*
+import rutinas.*
+import personas.*
+
+describe "Test de las Rutinas" {
+    var runningPrueba
+    var maratonPrueba
+    var remoPrueba
+    var remoCompeticionPrueba
+
+    method initialize() {
+        runningPrueba = new Running(intensidad = 1.2)
+        maratonPrueba = new Maraton(intensidad = 1.5)
+        remoPrueba = new Remo()
+        remoCompeticionPrueba = new RemoCompeticion()
+    }
+    test "Running" {
+        runningPrueba.intensidad(1.2)
+        assert.equals(360, runningPrueba.caloriasQuemadasEn(5))
+        assert.equals(10200, runningPrueba.caloriasQuemadasEn(90))
+    }
+
+    test "Maraton" {
+        maratonPrueba.intensidad(1.5)
+        assert.equals(900, maratonPrueba.caloriasQuemadasEn(5))
+        assert.equals(25500, maratonPrueba.caloriasQuemadasEn(90))
+    }
+
+    test "Remo" {
+        assert.equals(520, remoPrueba.caloriasQuemadasEn(5))
+        assert.equals(9360, remoPrueba.caloriasQuemadasEn(90))
+    }
+
+    test "Remo de Competicion" {
+        assert.equals(510, remoCompeticionPrueba.caloriasQuemadasEn(5))
+        assert.equals(12750, remoCompeticionPrueba.caloriasQuemadasEn(90))
+    }
+}
+
+describe "Test de las Personas Sedentarias" {
+    var calamardo
+    var runningPrueba
+    var maratonPrueba
+    var remoPrueba
+    var remoCompeticionPrueba
+
+    method initialize() {
+        calamardo = new PersonaSedentaria(peso = 60, tiempoEjercitado = 5)
+        runningPrueba = new Running(intensidad = 1.2)
+        maratonPrueba = new Maraton(intensidad = 1.5)
+        remoPrueba = new Remo()
+        remoCompeticionPrueba = new RemoCompeticion()
+    }
+    test "Test de las Personas Sedentarias - Running" {
+        calamardo.practicarRutina(runningPrueba)
+        assert.equals(59.948, calamardo.peso())
+    }
+
+    test "Test de las Personas Sedentarias - Maraton" {
+        calamardo.practicarRutina(maratonPrueba)
+        assert.equals(59.871, calamardo.peso())
+    }
+
+    test "Test de las Personas Sedentarias - Remo" {
+        calamardo.practicarRutina(remoPrueba)
+        assert.equals(59.925, calamardo.peso())
+    }
+
+    test "Test de las Personas Sedentarias - Remo de Competicion" {
+        calamardo.practicarRutina(remoCompeticionPrueba)
+        assert.equals(59.927, calamardo.peso())
+    }
+
+    test "Test de las Personas Sedentarias - No hace ninguna rutina" {
+        calamardo = new PersonaSedentaria(peso = 40, tiempoEjercitado = 5)
+        calamardo.practicarRutina(runningPrueba)
+        assert.equals(40, calamardo.peso())
+    }
+}
+
+describe "Test de las Personas Atleticas" {
+    var bob
+    var runningPrueba
+    var maratonPrueba
+    var remoPrueba
+    var remoCompeticionPrueba
+
+    method initialize() {
+        bob = new PersonaAtletica(peso = 40)
+        runningPrueba = new Running(intensidad = 1.2)
+        maratonPrueba = new Maraton(intensidad = 1.5)
+        remoPrueba = new Remo()
+        remoCompeticionPrueba = new RemoCompeticion()
+    }
+    test "Test de las Personas Atleticas - Running" {
+        bob.practicarRutina(runningPrueba)
+        assert.equals(39.725, bob.peso())
+    }
+
+    test "Test de las Personas Atleticas - Maraton" {
+        bob.practicarRutina(maratonPrueba)
+        assert.equals(37.812, bob.peso())
+    }
+
+    test "Test de las Personas Atleticas - Remo" {
+        bob.practicarRutina(remoPrueba)
+        assert.equals(40, bob.peso())
+    }
+
+    test "Test de las Personas Atleticas - Remo de competencia" {
+        bob.practicarRutina(remoCompeticionPrueba)
+        assert.equals(39.406, bob.peso())
+    }
+}
+
+describe "Test de los Clubes y Predios" {
+    var clubBarrial
+    var nautico
+    var recreo
+    var remarDelta
+    var caminoRemeros
+    var correrPlaya
+    var correrMaraton
+    var bob
+    var calamardo
+
+
+    method initialize() {
+        clubBarrial = new Club()
+        nautico = new Predio()
+        recreo = new Predio()
+        remarDelta = new Remo()
+        caminoRemeros = new RemoCompeticion()
+        correrPlaya = new Running(intensidad = 1.2)
+        correrMaraton = new Maraton(intensidad = 1.5)
+        nautico.rutinasPracticables().addAll(#{remarDelta, caminoRemeros})
+        recreo.rutinasPracticables().addAll(#{correrPlaya, correrMaraton})
+        clubBarrial.prediosDisponibles().addAll(#{nautico, recreo})
+        bob = new PersonaAtletica(peso = 40)
+        calamardo = new PersonaSedentaria(peso = 60, tiempoEjercitado = 5)
+    }
+
+    test "Test de los Clubes y Predios - Mejor Predio" {
+        assert.equals(recreo, clubBarrial.mejorPredioPara(bob))
+        assert.equals(recreo, clubBarrial.mejorPredioPara(calamardo))
+    }
+
+    test "Test de los Clubes y Predios - Predios Tranquis" {
+        assert.equals(#{}, clubBarrial.prediosTranquisPara(bob))
+        assert.equals(#{recreo}, clubBarrial.prediosTranquisPara(calamardo))
+    }
+
+    test "Test de los Clubes y Predios - Rutinas Exigentes" {
+        assert.equals([caminoRemeros, correrMaraton], clubBarrial.rutinasMasExigentesPara(bob))
+        assert.equals([remarDelta, correrMaraton], clubBarrial.rutinasMasExigentesPara(calamardo))
+    }
+}
